@@ -13,14 +13,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Admin />} path="admin">
-          <Route element={<AdminProfile />} path="profile" />
-        </Route>
-        <Route element={<Main />} path="main">
+        
+          
+        
         <Route element={<login />} path ="login"></Route>
         <Route element={<signup />} path="signup" />
-        </Route>
-        <Route element={<User />} path="user"></Route>
+        
+        
 
         {/* <Route element={<Login />} path="/login"></Route> */}
       </Routes>
