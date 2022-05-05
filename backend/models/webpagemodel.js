@@ -3,8 +3,8 @@ const mongoose = require("../connection");
 const schema = new mongoose.Schema({
   title: String,
   assets: Array,
-  data: String,
-  forms: String,
+  data: Object,
+  forms: Array,
   createdAt: { type: Date, default: new Date() },
 
   createdBy:{type:data, default: new Date()},
