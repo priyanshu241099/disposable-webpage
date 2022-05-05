@@ -11,8 +11,6 @@ import signup from "./components/main/signup"
 
 function App() {
   return (
-
-
     <BrowserRouter>
       <Routes>
         <Route element={<Admin />} path="admin">
