@@ -1,12 +1,13 @@
 import React from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@mui/material'
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
+import{AddCircleOutlined} from '@mui/icons-material';
+
 const Signup = () => {
     const paperStyle = { padding: 20, width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
@@ -17,7 +18,7 @@ const Signup = () => {
             <Paper style={paperStyle}>
                 <Grid align='center'>
                     <Avatar style={avatarStyle}>
-                        <AddCircleOutlineOutlinedIcon />
+                        <AddCircleOutlined />
                     </Avatar>
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
