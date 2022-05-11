@@ -8,22 +8,29 @@ import AdminProfile from "./components/admin/profile";
 import Login from "./components/main/login";
 import Signup from "./components/main/signup";
 import ManageAsset from "./components/user/manageAsset";
+import AddWebpage from "./components/user/addWebpage";
+import { Navigate } from "react-router-dom";
+import Home from "./components/main/home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         
-          
-        
-        <Route element={<Login />} path ="login"></Route>
-        <Route element={<Signup />} path="signup" />
-
-
         <Route element={<User/>} path="user">
-        <Route element={<ManageAsset/>} path="manageasset"/>
+          <Route element={<ManageAsset/>} path="manageasset"/>
+          <Route element={<AddWebpage/>} path="addwebpage"/>
+      
         </Route>
-        
+
+        <Route element={<Main/>} path="main">
+        <Route element={<Login />} path ="login"></Route>
+        <Route element={<Signup/>} path="signup" />
+        <Route element={<Home/>} path="home" />
+       
+        </Route>
+        <Route element={<Navigate to="/main/home"></Navigate>} path="" />
+        {/* <Route element={<Navigate to="/404"></Navigate>} path="*" /> */}
         
 
         {/* <Route element={<Login />} path="/login"></Route> */}
