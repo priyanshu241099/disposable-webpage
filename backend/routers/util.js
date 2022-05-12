@@ -31,7 +31,11 @@ const sendMail = (to, subject, text) => {
   client.send(
     {
       text: text,
+<<<<<<< HEAD
+      from: 'mail@gmail.com',
+=======
       from: 'akarshit@gmail.com',
+>>>>>>> ed3c9c04b3e005607654aee6be963bb6121f09de
       to: to,
 
       cc: '',

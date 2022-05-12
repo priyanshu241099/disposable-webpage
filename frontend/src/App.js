@@ -4,7 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Admin from "./components/admin";
 import Main from "./components/main";
 import User from "./components/user";
-import AdminProfile from "./components/admin/profile";
+import Managewebpage from "./components/user/managewebpage";
+
 import Login from "./components/main/login";
 import Signup from "./components/main/signup";
 import ManageAsset from "./components/user/manageAsset";
@@ -22,6 +23,8 @@ function App() {
           <Route element={<AddWebpage/>} path="addwebpage"/>
       
         </Route>
+        <Route element={<User />} path="user" />
+        <Route element={<Managewebpage />} path="managewebpage" />
 
         <Route element={<Main/>} path="main">
         <Route element={<Login />} path ="login"></Route>
