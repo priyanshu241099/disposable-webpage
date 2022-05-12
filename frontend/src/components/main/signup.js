@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
-import{AddCircleOutlined} from '@mui/icons-material';
+import {Add} from '@mui/icons-material';
 
 const Signup = () => {
     const paperStyle = { padding: 20, width: 300, margin: "0 auto" }
