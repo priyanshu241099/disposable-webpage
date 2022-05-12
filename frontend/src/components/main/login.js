@@ -74,8 +74,8 @@ const Login = () => {
         >
           <Box style={{ display: "flex", float: "left" }}>
             <img
-              src="https://thumbs.dreamstime.com/b/florists-woman-her-flowers-shop-vector-illustration-florist-girl-flower-44402546.jpg"
-              alt="cartoon"
+              src=
+                alt="cartoon"
             ></img>
           </Box>
           <Box
