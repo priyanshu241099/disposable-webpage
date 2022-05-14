@@ -1,10 +1,10 @@
-
 // importing express
 const express = require("express");
 
 // importing userRouter
 const UserRouter = require("./routers/UserRouter");
 const UtilRouter = require("./routers/util");
+const AssetRouter = require("./routers/AssetRouter");
 
 // importing cors
 const cors = require("cors");
@@ -26,6 +26,7 @@ app.use(
 // using middleware
 app.use("/user", UserRouter);
 app.use("/util", UtilRouter);
+app.use("/asset", AssetRouter);
 
 // endpoints or route
 app.get("/user", (req, res) => {
