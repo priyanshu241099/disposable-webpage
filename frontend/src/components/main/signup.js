@@ -79,6 +79,7 @@ const Signup = () => {
               justifyContent: "center",
               borderRadius: 5,
               boxShadow: "2px 2px 2px 2px #fce6ff",
+              
             }}
             sx={{ ml: 1, mr: 2, mt: 5 }}
           >
