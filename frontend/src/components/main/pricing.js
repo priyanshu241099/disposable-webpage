@@ -1,230 +1,217 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import app_config from "../../config";
 
 const Pricing = () => {
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
+
+  const pricing = [
+    {
+      name: "Basic",
+      price: 50,
+      features: ["Unlimited updates", "500MB Storage"],
+    },
+    {
+      name: "Enterprise",
+      price: 250,
+      features: [
+        "Unlimited updates",
+        "2GB Storage",
+        "Premium Snippets",
+        "Subscription Service",
+      ],
+    },
+    {
+      name: "Advanced",
+      price: 500,
+      features: [
+        "Unlimited Updates",
+        "Unlimited Storage",
+        "Premium Snippets",
+        "Subscription Service",
+        "Webpage Builder",
+        "Code Examples",
+      ],
+    },
+  ];
+
+  const url = app_config.backend_url;
+  const navigate = useNavigate();
+
+  const checkPlan = () => {
+    fetch(url + "/plan/getbyuser/" + currentUser._id).then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => {
+          console.log(data);
+          if (data) return true;
+        });
+      }
+    });
+    return false;
+  };
+
+  const purchasePlan = (plan) => {
+    if (currentUser === null) {
+      Swal.fire({
+        icon: "error",
+        title: "No Account",
+        text: "Login First to purchase",
+      });
+      navigate("/main/login");
+      return;
+    }
+
+    if (checkPlan()) {
+      Swal.fire({
+        icon: "error",
+        title: "Already Purchased",
+        text: "Plan already purchased",
+      });
+      navigate("/user/manageplans");
+      return;
+    }
+
+    fetch(url + "/plan/add", {
+      method: "POST",
+      body: JSON.stringify({
+        user: currentUser._id,
+        plan: plan,
+        createdAt: new Date(),
+      }),
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log("Plan Saved");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Purchased Plan Successfully",
+        });
+        navigate("/user/manageplans");
+      }
+    });
+  };
+
   return (
-    <section style={{ backgroundColor: "#eee" }}>
-      <div class="container py-5">
-        <div class="row">
-          <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-            <div class="card text-black">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img1.webp"
-                class="card-img-top"
-                alt="iPhone"
-              />
-              <div class="card-body">
-                <div class="text-center mt-1">
-                  <h4 class="card-title">iPhone X</h4>
-                  <h6 class="text-primary mb-1 pb-3">Starting at $399</h6>
-                </div>
-
-                <div class="text-center">
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Quick Look</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">5.8″</span>
-                    <span>Super Retina HD display1</span>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">
-                      <i class="fas fa-camera-retro"></i>
-                    </span>
-                    <ul class="list-unstyled mb-0">
-                      <li aria-hidden="true">—</li>
-                      <li>Wide</li>
-                      <li>Telephoto</li>
-                      <li aria-hidden="true">—</li>
-                    </ul>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">2x</span>
-                    <span>Optical zoom range</span>
-                  </div>
-
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Capacity</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4 lead">
-                    <span class="mb-2">64GB</span>
-                    <span class="mb-2">256GB</span>
-                    <span style={{color: 'transparen'}}>0</span>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-row">
+    <div style={{ position: "relative" }}>
+      <section draggable="false" className="container pt-5" data-v-271253ee="">
+        <section className="mb-10">
+          <div
+            id="pricing-block-5"
+            className="background-radial-gradient text-center text-white"
+          >
+            <h1 className="fw-bold mb-4" style={{ color: "#d75500" }}>
+              Pricing
+            </h1>
+          </div>
+          <div className="row mx-4 mx-md-5">
+            <div className="col-lg-4 col-md-12 p-0 py-5">
+              <div className="card h-100 rounded-lg-top-end rounded-lg-bottom-end">
+                <div className="card-header text-center pt-4">
+                  <p className="text-uppercase">
+                    <strong>{pricing[0].name}</strong>
+                  </p>
+                  <h3 className="mb-4">
+                    <strong>₹ {pricing[0].price}</strong>
+                    <small className="text-muted" style={{ fontSize: "16px" }}>
+                      /month
+                    </small>
+                  </h3>
                   <button
                     type="button"
-                    class="btn btn-primary flex-fill me-1"
-                    data-mdb-ripple-color="dark"
+                    className="btn btn-link w-100 mb-3"
+                    style={{ backgroundColor: "hsl(0, 0%, 95%)" }}
+                    data-ripple-color="primary"
+                    onClick={(e) => purchasePlan(pricing[0])}
                   >
-                    Learn more
+                    Buy
                   </button>
-                  <button type="button" class="btn btn-danger flex-fill ms-1">
-                    Buy now
+                </div>
+                <div className="card-body">
+                  <ol className="list-unstyled mb-0">
+                    {pricing[0].features.map((feature) => (
+                      <li className="mb-3">
+                        <i className="fas fa-check text-success me-3"></i>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4 p-0">
+              <div className="card h-100 shadow-5" style={{ zIndex: "1" }}>
+                <div className="card-header text-center pt-4">
+                  <p className="text-uppercase">
+                    <strong>{pricing[1].name}</strong>
+                  </p>
+                  <h3 className="mb-4">
+                    <strong>₹ {pricing[1].price}</strong>
+                    <small className="text-muted" style={{ fontSize: "16px" }}>
+                      /month
+                    </small>
+                  </h3>
+                  <button
+                    type="button"
+                    className="btn btn-primary w-100 mb-3"
+                    onClick={(e) => purchasePlan(pricing[1])}
+                  >
+                    Buy
                   </button>
+                </div>
+                <div className="card-body">
+                  <ol className="list-unstyled mb-0">
+                    {pricing[1].features.map((feature) => (
+                      <li className="mb-3">
+                        <i className="fas fa-check text-success me-3"></i>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4 p-0 py-5">
+              <div className="card h-100 rounded-lg-top-end rounded-lg-bottom-end">
+                <div className="card-header text-center pt-4">
+                  <p className="text-uppercase">
+                    <strong>{pricing[2].name}</strong>
+                  </p>
+                  <h3 className="mb-4">
+                    <strong>₹ {pricing[2].price}</strong>
+                    <small className="text-muted" style={{ fontSize: "16px" }}>
+                      /month
+                    </small>
+                  </h3>
+                  <button
+                    type="button"
+                    className="btn btn-link w-100 mb-3"
+                    style={{ backgroundColor: "hsl(0, 0%, 95%)" }}
+                    data-ripple-color="primary"
+                    onClick={(e) => purchasePlan(pricing[2])}
+                  >
+                    Buy
+                  </button>
+                </div>
+                <div className="card-body">
+                  <ol className="list-unstyled mb-0">
+                    {pricing[2].features.map((feature) => (
+                      <li className="mb-3">
+                        <i className="fas fa-check text-success me-3"></i>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-            <div class="card text-black">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img2.webp"
-                class="card-img-top"
-                alt="iPhone"
-              />
-              <div class="card-body">
-                <div class="text-center mt-1">
-                  <h4 class="card-title">iPhone 11</h4>
-                  <h6 class="text-primary mb-1 pb-3">Starting at $499</h6>
-                </div>
-
-                <div class="text-center">
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Quick Look</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">6.1″</span>
-                    <span>Liquid Retina HD display1</span>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">
-                      <i class="fas fa-camera-retro"></i>
-                    </span>
-                    <ul class="list-unstyled mb-0">
-                      <li aria-hidden="true">Ultra Wide</li>
-                      <li>Wide</li>
-                      <li aria-hidden="true">—</li>
-                      <li aria-hidden="true">—</li>
-                    </ul>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">2x</span>
-                    <span>Optical zoom range</span>
-                  </div>
-
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Capacity</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4 lead">
-                    <span class="mb-2">64GB</span>
-                    <span class="mb-2">128GB</span>
-                    <span>256GB</span>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-row">
-                  <button
-                    type="button"
-                    class="btn btn-primary flex-fill me-1"
-                    data-mdb-ripple-color="dark"
-                  >
-                    Learn more
-                  </button>
-                  <button type="button" class="btn btn-danger flex-fill ms-1">
-                    Buy now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
-            <div class="card text-black">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-product-cards/img3.webp"
-                class="card-img-top"
-                alt="iPhone"
-              />
-              <div class="card-body">
-                <div class="text-center mt-1">
-                  <h4 class="card-title">iPhone 11 Pro</h4>
-                  <h6 class="text-primary mb-1 pb-3">Starting at $599</h6>
-                </div>
-
-                <div class="text-center">
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Quick Look</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">5.8″</span>
-                    <span>Super Retina HD display1</span>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">
-                      <i class="fas fa-camera-retro"></i>
-                    </span>
-                    <ul class="list-unstyled mb-0">
-                      <li aria-hidden="true">Ultra Wide</li>
-                      <li>Wide</li>
-                      <li>Telephoto</li>
-                      <li aria-hidden="true">—</li>
-                    </ul>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4">
-                    <span class="h1 mb-0">4x</span>
-                    <span>Optical zoom range</span>
-                  </div>
-
-                  <div
-                    class="p-3 mx-n3 mb-4"
-                    style={{ backgroundColor: "#eff1f2" }}
-                  >
-                    <h5 class="mb-0">Capacity</h5>
-                  </div>
-
-                  <div class="d-flex flex-column mb-4 lead">
-                    <span class="mb-2">64GB</span>
-                    <span class="mb-2">256GB</span>
-                    <span>512GB</span>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-row">
-                  <button
-                    type="button"
-                    class="btn btn-primary flex-fill me-1"
-                    data-mdb-ripple-color="dark"
-                  >
-                    Learn more
-                  </button>
-                  <button type="button" class="btn btn-danger flex-fill ms-1">
-                    Buy now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      </section>
+    </div>
   );
 };
 

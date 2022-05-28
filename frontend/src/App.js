@@ -13,6 +13,9 @@ import AddWebpage from "./components/user/addWebpage";
 import { Navigate } from "react-router-dom";
 import Home from "./components/main/home";
 import Pricing from "./components/main/pricing";
+import Dashboard from "./components/admin/dashboard";
+import AdminProfile from "./components/admin/profile";
+import footer from "./components/main/footer";
 
 function App() {
   return (
@@ -30,8 +33,15 @@ function App() {
           <Route element={<Signup />} path="signup" />
           <Route element={<Home />} path="home" />
           <Route element={<Pricing />} path="pricing" />
+          
         </Route>
+
         <Route element={<Navigate to="/main/home"></Navigate>} path="" />
+
+        <Route element={<Admin />} path="admin">
+          <Route element={<Dashboard />} path="dashboard" />
+          <Route element={<AdminProfile />} path="profile" />
+        </Route>
         {/* <Route element={<Navigate to="/404"></Navigate>} path="*" /> */}
 
         {/* <Route element={<Login />} path="/login"></Route> */}

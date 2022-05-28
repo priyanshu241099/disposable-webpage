@@ -17,6 +17,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Signup = () => {
+  
   const signupStyles = {
     background: "url(https://wallpaperaccess.com/full/1223823.jpg)",
     height: "100%",
@@ -59,6 +60,7 @@ const Signup = () => {
 
   const formBody = ({ values, handleSubmit, handleChange }) => {
     return (
+     
       <Container style={{ width: 1000 }}>
         <Card
           style={{ borderRadius: 10, boxShadow: "4px 4px 4px 4px #89009c" }}
@@ -173,6 +175,7 @@ const Signup = () => {
           </Box>
         </Card>
       </Container>
+      
     );
   };
 

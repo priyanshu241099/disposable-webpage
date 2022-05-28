@@ -26,8 +26,28 @@ import { useEffect, useState } from "react";
 
 const pages = [
   {
-    name: "Browse Slides",
-    link: "/main/browseSlides",
+    name: "Home",
+    link: "/main/home",
+  },
+  {
+    name: "Manage Your Webpage",
+    link: "/user/managewebpage",
+  },
+  {
+    name: "Manage Plans",
+    link: "/user/manageplans",
+  },
+  {
+    name: "Pricing",
+    link: "/main/pricing",
+  },
+  {
+    name: "Login",
+    link: "/main/login",
+  },
+  {
+    name: "Signup",
+    link: "/main/signup",
   },
 ];
 
@@ -77,9 +97,9 @@ const Header = () => {
       link: "/admin/profile",
     },
     {
-      name: "Manage Slides",
+      name: "Manage Your Webpage",
       icon: <Subscriptions />,
-      link: "/admin/manageslide",
+      link: "/admin/managewebpage",
     },
     {
       name: "Logout",
@@ -87,6 +107,19 @@ const Header = () => {
       click: logout,
     },
   ];
+
+  const showAuthOptions = () => {
+    if (currentUser === null) {
+      return guestUser.map(({ name, icon, link }) => (
+        <MenuItem key={name} onClick={(e) => navigate(link)}>
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText>{name}</ListItemText>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </MenuItem>
+      ));
+    } else {
+    }
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -106,7 +139,7 @@ const Header = () => {
 
   return (
     <div>
-      <AppBar position="static" sx={{ backgroundColor: "#4e0263" }}>
+      <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
@@ -114,8 +147,9 @@ const Header = () => {
               noWrap
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+              style={{ fontFamily: "Courgette" }}
             >
-              Presentio
+              Disposable Webpage
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -160,9 +194,9 @@ const Header = () => {
               component="div"
               sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
             >
-              E-Udayaan
+              Disposable Webpage
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ mx: "auto", display: { xs: "none", md: "flex" } }}>
               {pages.map(({ name, link }) => (
                 <Button
                   key={name}
@@ -173,7 +207,7 @@ const Header = () => {
                 </Button>
               ))}
             </Box>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {/* <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {guestUser.map(({ name, link, icon }) => (
                 <Tooltip title={name}>
                   <IconButton
@@ -253,18 +287,9 @@ const Header = () => {
                 open={Boolean(anchorElGuest)}
                 onClose={(e) => setAnchorElGuest(null)}
               >
-                {guestUser.map(({ name, icon, link }) => (
-                  <MenuItem key={name} onClick={(e) => navigate(link)}>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText>{name}</ListItemText>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/1.jpg"
-                    />
-                  </MenuItem>
-                ))}
+                {showAuthOptions()}
               </Menu>
-            </Box>
+            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
